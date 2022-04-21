@@ -8,3 +8,7 @@ def index(request):
         "entries": util.list_entries()
     })
 
+def notFound(request, name):
+    return render(request, "encyclopedia/notFound.html", {
+        "name": name.capitalize()
+    })
