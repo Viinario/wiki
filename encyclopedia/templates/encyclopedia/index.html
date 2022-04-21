@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block body %}
-    <h1>All Pages</h1>
+    {% if querry != null %}
+       <h1>All Results of "{{ querry }}":</h1>
+       <hr>
+    {% else %}
+       <h1>All Pages</h1>
+       <hr>
+    {% endif %}
 
     <ul>
         {% for entry in entries %}
