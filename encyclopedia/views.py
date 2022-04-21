@@ -1,3 +1,4 @@
+from django import forms
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -37,4 +38,6 @@ def search(request):
         "querry": querry
     })
 
+def newPage(request):
+    return render(request, "encyclopedia/newPage.html")
 
