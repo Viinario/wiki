@@ -6,7 +6,23 @@
 
 {% block body %}
 
-<h1>  Create New Page  </h1>
+<h1>📝Create New Page📝</h1>
 <hr>
+
+ <form action="{% url 'savePage' %}" method="post">
+    {% csrf_token %}
+    {% if warming%}
+    <h3>🛑 ERROR 🛑<h4>
+    <h4>📌  Page "{{ page }}" Already Exist 📌 <h4>
+    <h4>For Access The Page: ➡️ <a href="/wiki/{{ page }}">click here</a><h4>
+    <hr>
+    {% endif %}
+    <h3>📜 Title</h3>
+    {{ form.title }} <br>
+    <hr>
+    <h3>📜 Content </h3>
+    {{ form.content }}<br>
+    <input type="submit" value="Submit">
+</form>
 
 {% endblock %}

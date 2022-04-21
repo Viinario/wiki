@@ -1,11 +1,15 @@
 from django import forms
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
 from . import util
 
 from markdown2 import Markdown
+
+class NewForm(forms.Form):
+    title = forms.CharField(max_length=20)
+    content = forms.CharField(widget=forms.Textarea)
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -39,5 +43,24 @@ def search(request):
     })
 
 def newPage(request):
-    return render(request, "encyclopedia/newPage.html")
+    return render(request, "encyclopedia/newPage.html",{
+        "form": NewForm()
+    })
+
+def savePage(request):
+    if request.method == "POST":
+        form = NewForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            if util.get_entry(title) is None:
+                util.save_entry(title,content)
+                return HttpResponseRedirect(reverse("find", kwargs={'name': title}))
+            else:
+                return render(request, "encyclopedia/newPage.html",{
+                        "form": form,
+                        "warming": True,
+                        "page": title
+                        })
+
 

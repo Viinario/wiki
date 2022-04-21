@@ -6,16 +6,16 @@
 
 {% block body %}
     {% if querry != null %}
-       <h1>All Results of "{{ querry }}":</h1>
+       <h1>Results of "{{ querry }}" ⤵️</h1>
        <hr>
     {% else %}
-       <h1>All Pages</h1>
+       <h1>📚 All Pages 📚</h1>
        <hr>
     {% endif %}
 
     <ul>
         {% for entry in entries %}
-            <li><a href="/wiki/{{ entry }}">{{ entry }}</a></li>
+            <li><a href="/wiki/{{ entry }}">📌{{ entry }}</a></li>
         {% endfor %}
     </ul>
 
