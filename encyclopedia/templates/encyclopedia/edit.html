@@ -1,0 +1,26 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia: Edit Page
+{% endblock %}
+
+{% block body %}
+
+<h1>📝Editing Page {{ name }}📝</h1>
+<hr>
+
+ <form action="{% url 'saveEditPage' %}" method="post">
+    {% csrf_token %}
+    {% if warming%}
+    <h3>🛑 ERROR 🛑<h4>
+    <h4>📌  Page "{{ page }}" Already Exist 📌 <h4>
+    <h4>For Access The Page: ➡️ <a href="/wiki/{{ page }}">click here</a><h4>
+    <hr>
+    {% endif %}
+    {{ form.title }} <br>
+    <h3>📜 Content </h3>
+    {{ form.content }}<br>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

@@ -63,4 +63,33 @@ def savePage(request):
                         "page": title
                         })
 
+def edit(request, name):
+    page = util.get_entry(name)
+    if page is None:
+        return  render(request, "encyclopedia/notFound.html", {
+        "name": page
+        })
+    else:
+        form = NewForm()
+        form.fields["title"].initial = name
+        form.fields["title"].widget = forms.HiddenInput()
+        form.fields["content"].initial = page
+        return render(request, "encyclopedia/edit.html",{
+            "form": form,
+            "name": name
+        })
+
+def saveEditPage(request):
+    if request.method == "POST":
+        form = NewForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+            util.save_entry(title,content)
+            return HttpResponseRedirect(reverse("find", kwargs={'name': title}))
+
+
+
+
+
 
