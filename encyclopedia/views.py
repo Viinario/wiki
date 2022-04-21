@@ -1,3 +1,4 @@
+import secrets
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -67,7 +68,7 @@ def edit(request, name):
     page = util.get_entry(name)
     if page is None:
         return  render(request, "encyclopedia/notFound.html", {
-        "name": page
+        "name": name
         })
     else:
         form = NewForm()
@@ -88,6 +89,10 @@ def saveEditPage(request):
             util.save_entry(title,content)
             return HttpResponseRedirect(reverse("find", kwargs={'name': title}))
 
+def random(request):
+    pages = util.list_entries()
+    name = secrets.choice(pages)
+    return HttpResponseRedirect(reverse("find", kwargs={'name':name}))
 
 
 
